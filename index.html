@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Counterpad</title>
+	<style>
+		html {
+			width: 100%;
+			height: 100%;
+		}
+		body, html {
+			margin: 0;
+			padding: 0;
+			background-color: #202020;
+
+			color: #ccc;
+			font-size: 30px;
+			font-family: sans;
+		}
+
+		body {
+			min-height: 100%;
+			display: flex;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		text, status {
+			flex-grow: 2;
+			width: 50%;
+			outline: 0;
+		}
+
+		text::first-line {
+			line-height: 3em;
+			font-weight: 600;
+			font-size: 1.2em;
+		}
+
+		status {
+			flex-grow: 0;
+			flex-shrink: 0;
+			height: 1.5em;
+			margin-top: 1em;
+			opacity: .3;
+			text-align: right;
+		}
+
+		@media screen and (min-width: 320px) and (orientation: portrait) {
+			* {
+				font-size: 50px;
+			}
+			text, status {
+				width: 85%;
+			}
+		}
+	</style>
+	<script type='text/javascript'>
+		function init() {
+			let field = document.querySelector('text'),
+				status = document.querySelector('status');
+
+			field.addEventListener('keyup', (...args) => {
+				status.innerText =
+					field.innerText
+					.replace(/[\t\r\n\s]/g, ' ')
+					.replace(/[^\w ]/g, '')
+					.replace(/\s+/g, ' ')
+					.trim()
+					.split(' ')
+					.length;
+			});
+
+			field.focus()
+		}
+	</script>
+</head>
+<body onload=init()>
+	<text contentEditable></text>
+	<status></status>
+</body>
+</html>
